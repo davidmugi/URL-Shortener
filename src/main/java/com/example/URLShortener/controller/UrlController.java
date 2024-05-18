@@ -28,18 +28,20 @@ public class UrlController {
 
   @PostMapping("create")
   public ResponseEntity<URLDTO> createUrlDTO(final URLDTO urldto) throws UrlAlreadyExistException {
+    logger.info("UrlController-createUrlDTO {}", urldto);
     return ResponseEntity.ok(urlServiceInterface.createUrl(urldto));
   }
 
   @PostMapping("update")
   public ResponseEntity<URLDTO> updateUrlDTO(final URLDTO urldto) throws UrlNotFoundException {
+    logger.info("UrlController-updateUrlDTO {}", urldto);
     return ResponseEntity.ok(urlServiceInterface.updateUrl(urldto));
   }
 
   @GetMapping("/{shortUrl}")
   public ResponseEntity redirect(HttpServletResponse response,@PathVariable final String shortUrl) throws UrlNotFoundException {
+    logger.info("UrlController-redirect {}", shortUrl);
     final String url = urlServiceInterface.hitUrl(shortUrl);
     return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION,url).build();
   }
-
 }
