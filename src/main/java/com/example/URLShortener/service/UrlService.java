@@ -35,14 +35,14 @@ public class UrlService implements UrlServiceInterface{
 
     final URL url = urlMapper.urlDtoToURL(urldto);
 
-    final String fullUrl = url.getUrl();
-
     Sqids sqids = Sqids.builder()
         .alphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         .minLength(6)
         .build();
 
-    url.setUrlIdentifier(sqids.encode(Arrays.asList(1L,2L,3L,4L,5L,7L,8L)));
+    final Long urlLength = (long) url.getUrl().length();
+
+    url.setUrlIdentifier(sqids.encode(Arrays.asList(urlLength,System.currentTimeMillis())));
     url.setClickCount(0);
     urlRepository.save(url);
 
